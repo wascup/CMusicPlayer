@@ -1,4 +1,4 @@
-struct Button {
+typedef struct Button {
     int x;
     int y;
     int width;
@@ -7,15 +7,15 @@ struct Button {
     Color textColor;
     bool isPressed;
 
-};
+} Button;
 
-struct songData {
+typedef struct songData {
     const char *songName;
     const char *artistName;
     const char *albumName;
     const char *albumArtDir;
     int year;
-};
+} songData;
 // Prototypes
 void drawAlbumArt(Texture2D albumArt);
 void drawBottomBar();

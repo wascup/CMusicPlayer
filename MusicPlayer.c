@@ -20,7 +20,11 @@ int main() {
     InitWindow(screenWidth, screenHeight, ProgramName);
     SetTargetFPS(mainProgramFPS);
 
-    struct songData wonder = createSong("I Wonder", "Kanye West", "Graduation","resources/Temp.png", 2007);
+    songData wonder = createSong("I Wonder", "Kanye West", "Graduation","resources/Temp.png", 2007);
+    songData everywhere = createSong("Everywhere (12\" version)", "Fleetwood Mac", "Tango In The Night","resources/Temp.png", 1990);
+    songData closeToYou = createSong("Close To You", "Dayglow", "Harmony House","resources/Temp.png", 2021);
+    songData songList[] = {wonder, everywhere, closeToYou};
+
 
     
     // TESTING
@@ -36,10 +40,10 @@ int main() {
         ClearBackground(bgColor);
         
         drawBottomBar();
-        drawDummySlider();
+        drawDummySlider(15);
         drawAlbumArt(albumArtTexture);
         drawSongInfo(wonder);
-        drawSongList();
+        drawSongList(songList);
 
         EndDrawing();
     }
@@ -71,12 +75,19 @@ void drawSongInfo(struct songData song) {
 }
 
 //Draws the BG song list
-void drawSongList() {
-    DrawRectangle(330, 15, 460, screenHeight - bottomBarHeight - 25, listColor);
+void drawSongList(struct songData *songList) {
+    DrawText("Playlist", 330, 15, 20, WHITE);
+    DrawRectangle(330, 40, 460, screenHeight - bottomBarHeight - 75, listColor);
+
+    //Add Song Button
+    DrawText("+", screenWidth - 25, screenHeight - bottomBarHeight - 30, 20, WHITE);
+    
 }
 
+
 //Draws a temporary fake slider till I add the real one
-void drawDummySlider() {
+void drawDummySlider(int headPosition) {
+    DrawCircle(15 + headPosition, screenHeight - bottomBarHeight / 2 - 30, 10, WHITE);
     DrawRectangle(15, screenHeight - bottomBarHeight / 2 - 30, screenWidth - 15 - 20, 2, WHITE);
 }
 
@@ -84,9 +95,6 @@ void drawDummySlider() {
 void addButton(struct Button button) {
     DrawText(button.text, button.x + 10, button.y + 10, 20, button.textColor);
 }
-
-
-
 
 // void checkMouseClick() {
 //     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
@@ -100,8 +108,8 @@ void addButton(struct Button button) {
 // }
 
 //Creates a new song struct
-struct songData createSong(const char *songName, const char *artistName, const char *albumName, const char *albumArtDir, int year) {
-    struct songData newSong;
+songData createSong(const char *songName, const char *artistName, const char *albumName, const char *albumArtDir, int year) {
+    songData newSong;
     newSong.songName = songName;
     newSong.artistName = artistName;
     newSong.albumName = albumName;
